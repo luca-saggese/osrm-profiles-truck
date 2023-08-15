@@ -34,3 +34,15 @@ Profiles are versioned by OSRM major, then minor version.
 Copyright © 2016 Project OSRM Contributors
 
 Distributed under the MIT License (MIT).
+
+### How to use
+
+sudo docker pull osrm/osrm-backend
+
+wget https://download.geofabrik.de/europe/italy-latest.osm.pbf
+
+git clone https://github.com/luca-saggese/osrm-profiles-truck.git
+
+mkdir osrm-data
+
+docker run -t -v "${PWD}:/data" -v "${PWD}/osrm-profiles-truck/5/27/truck:/opt/profile"  osrm/osrm-backend osrm-extract -p /opt/profile/car.lua /data/italy-latest.osm.pbf
