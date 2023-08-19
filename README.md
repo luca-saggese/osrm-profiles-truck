@@ -45,4 +45,4 @@ git clone https://github.com/luca-saggese/osrm-profiles-truck.git
 
 mkdir osrm-data
 
-docker run -t -v "${PWD}:/data" -v "${PWD}/osrm-profiles-truck/5/27/truck:/opt/profile"  osrm/osrm-backend osrm-extract -p /opt/profile/car.lua /data/italy-latest.osm.pbf
+sudo docker run -t -v "${PWD}:/data" -v "${PWD}/osrm-profiles-truck/5/27/truck:/opt/profile"   osrm/osrm-backend cp /opt/profile/car.lua /opt && osrm-extract -p /opt/car.lua /data/italy-latest.osm.pbf
