@@ -1,4 +1,4 @@
-# Truck - Soft
+# Truck
 Profile based on default car profile. Use diff file to review the changes.
 
 ## Why
