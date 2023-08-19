@@ -43,6 +43,10 @@ wget https://download.geofabrik.de/europe/italy-latest.osm.pbf
 
 git clone https://github.com/luca-saggese/osrm-profiles-truck.git
 
+cd osrm-profiles-truck
+
+docker build ./
+
 mkdir osrm-data
 
-sudo docker run -t -v "${PWD}:/data" -v "${PWD}/osrm-profiles-truck/5/27/truck:/opt/profile"   osrm/osrm-backend cp /opt/profile/car.lua /opt && osrm-extract -p /opt/car.lua /data/italy-latest.osm.pbf
+sudo docker run -t -v "${PWD}:/data"   158854921952  osrm-extract -p /opt/truck.lua /data/italy-latest.osm.pbf
