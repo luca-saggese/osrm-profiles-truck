@@ -45,8 +45,26 @@ git clone https://github.com/luca-saggese/osrm-profiles-truck.git
 
 cd osrm-profiles-truck
 
-docker build ./
+docker build ./ -t osrm/truck
 
-mkdir osrm-data
+sudo docker run -t -v "${PWD}:/data"   osrm/truck  osrm-extract -p /opt/truck.lua /data/italy-latest.osm.pbf
 
-sudo docker run -t -v "${PWD}:/data"   158854921952  osrm-extract -p /opt/truck.lua /data/italy-latest.osm.pbf
+sudo docker run -t -v "${PWD}:/data" osrm/osrm-backend- osrm-partition /data/italy-latest.osrm
+sudo docker run -t -v "${PWD}:/data" osrm/osrm-backend- osrm-customize /data/italy-latest.osrm
+
+
+docker run -t -i -p 5000:5000 -v "${PWD}:/data" osrm/osrm-backend- osrm-routed --algorithm mld /data/italy-latest.osrm
+
+## Test
+
+Make requests against the HTTP server
+
+curl "http://127.0.0.1:5000/route/v1/driving/13.388860,52.517037;13.385983,52.496891?steps=true"
+Optionally start a user-friendly frontend on port 9966, and open it up in your browser
+
+docker run -p 9966:9966 osrm/osrm-frontend
+xdg-open 'http://127.0.0.1:9966'
+In case Docker complains about not being able to connect to the Docker daemon make sure you are in the docker group.
+
+sudo usermod -aG docker $USER
+After adding yourself to the docker group make sure to log out and back in again with your terminal.
