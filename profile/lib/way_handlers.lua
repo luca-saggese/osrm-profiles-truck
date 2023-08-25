@@ -41,6 +41,13 @@ function WayHandlers.names(profile,way,result,data)
     result.name = name
   end
 
+  local toll = way:get_value_by_key("toll")
+  if "ues" == toll then
+    ref = ref  .. ";1"
+  else
+    ref = ref  .. ";0"
+  end
+
   if ref then
     result.ref = canonicalizeStringList(ref, ";")
   end
