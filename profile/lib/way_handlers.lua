@@ -41,15 +41,16 @@ function WayHandlers.names(profile,way,result,data)
     result.name = name
   end
 
-  local toll = way:get_value_by_key("toll")
-  if "yes" == toll then
-    ref = ref  .. ";1"
-  else
-    ref = ref  .. ";0"
-  end
+  
 
   if ref then
     result.ref = canonicalizeStringList(ref, ";")
+    local toll = way:get_value_by_key("toll")
+    if "yes" == toll then
+      result.ref = result.ref  .. ";1"
+    else
+      result.ref = result.ref  .. ";0"
+    end
   end
 
   if pronunciation then

@@ -6,10 +6,10 @@ echo "build osrm-backend"
 git clone https://github.com/Project-OSRM/osrm-backend.git
 cd osrm-backend
 sudo docker build . -f docker/Dockerfile -t osrm-backend-latest
-cd ..
+cd ../..
 
 echo "make truck docker"
-sudo docker build . -f ../Dockerfile -t osrm-backend-lvx
+sudo docker build . -f ./dockerfile -t osrm-backend-lvx
 
 cd osrm
 echo "download map"
