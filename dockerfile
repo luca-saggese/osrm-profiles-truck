@@ -1,2 +1,2 @@
-FROM osrm/osrm-backend
+FROM osrm-backend-latest
 ADD profile /opt
