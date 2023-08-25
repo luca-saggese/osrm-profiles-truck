@@ -49,11 +49,11 @@ docker build ./ -t osrm/truck
 
 sudo docker run -t -v "${PWD}:/data"   osrm/truck  osrm-extract -p /opt/truck.lua /data/italy-latest.osm.pbf
 
-sudo docker run -t -v "${PWD}:/data" osrm/osrm-backend- osrm-partition /data/italy-latest.osrm
-sudo docker run -t -v "${PWD}:/data" osrm/osrm-backend- osrm-customize /data/italy-latest.osrm
+sudo docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/italy-latest.osrm
+sudo docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/italy-latest.osrm
 
 
-docker run -t -i -p 5000:5000 -v "${PWD}:/data" osrm/osrm-backend- osrm-routed --algorithm mld /data/italy-latest.osrm
+sudo docker run -t -i -p 5000:5000 -v "${PWD}:/data" osrm/osrm-backend osrm-routed --algorithm mld /data/italy-latest.osrm
 
 ## Test
 
@@ -68,3 +68,10 @@ In case Docker complains about not being able to connect to the Docker daemon ma
 
 sudo usermod -aG docker $USER
 After adding yourself to the docker group make sure to log out and back in again with your terminal.
+
+docker run -d -t -i -e OSRM_MAPBOX_TOKEN='pk.eyJ1IjoibHZ4IiwiYSI6ImNrZ2o3aXpqcTA2dDIycm52MTBoYzZvdmMifQ.0DteWtdMjx2hXvHikr5RHg' -p 9966:9966 osrm/osrm-frontend
+
+
+
+sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-partition /data/italy-latest.osrm
+sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-customize /data/italy-latest.osrm
