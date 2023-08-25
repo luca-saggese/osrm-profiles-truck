@@ -42,7 +42,7 @@ function WayHandlers.names(profile,way,result,data)
   end
 
   local toll = way:get_value_by_key("toll")
-  if "ues" == toll then
+  if "yes" == toll then
     ref = ref  .. ";1"
   else
     ref = ref  .. ";0"
