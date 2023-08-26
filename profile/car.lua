@@ -15,7 +15,7 @@ Measure = require("lib/measure")
 function setup()
   return {
     properties = {
-      max_speed_for_map_matching      = 180/3.6, -- 180kmph -> m/s
+      max_speed_for_map_matching      = 90/3.6, -- 180kmph -> m/s
       -- For routing based on duration, but weighted for preferring certain roads
       weight_name                     = 'routability',
       -- For shortest duration without penalties for accessibility
@@ -23,29 +23,29 @@ function setup()
       -- For shortest distance without penalties for accessibility
       -- weight_name                     = 'distance',
       process_call_tagless_node      = false,
-      u_turn_penalty                 = 20,
+      u_turn_penalty                 = 60,
       continue_straight_at_waypoint  = true,
       use_turn_restrictions          = true,
       left_hand_driving              = false,
-      traffic_light_penalty          = 2,
+      traffic_light_penalty          = 60,
     },
 
     default_mode              = mode.driving,
     default_speed             = 10,
     oneway_handling           = true,
     side_road_multiplier      = 0.8,
-    turn_penalty              = 7.5,
+    turn_penalty              = 25,
     speed_reduction           = 0.8,
     turn_bias                 = 1.075,
     cardinal_directions       = false,
 
     -- Size of the vehicle, to be limited by physical restriction of the way
-    vehicle_height = 2.0, -- in meters, 2.0m is the height slightly above biggest SUVs
-    vehicle_width = 1.9, -- in meters, ways with narrow tag are considered narrower than 2.2m
+    vehicle_height = 4.0, -- in meters
+    vehicle_width = 2.8, -- in meters
 
     -- Size of the vehicle, to be limited mostly by legal restriction of the way
-    vehicle_length = 4.8, -- in meters, 4.8m is the length of large or family car
-    vehicle_weight = 2000, -- in kilograms
+    vehicle_length = 18.0, -- in meters, 4.8m is the length of large or familly car
+    vehicle_weight = 41000, -- in kilograms
 
     -- a list of suffixes to suppress in name change instructions. The suffixes also include common substrings of each other
     suffix_list = {
@@ -209,32 +209,32 @@ function setup()
       ["concrete:lanes"] = nil,
       paved = nil,
 
-      cement = 80,
-      compacted = 80,
-      fine_gravel = 80,
+      cement = 60,
+      compacted = 60,
+      fine_gravel = 40,
 
       paving_stones = 60,
-      metal = 60,
-      bricks = 60,
+      metal = 40,
+      bricks = 40,
 
-      grass = 40,
-      wood = 40,
+      grass = 20,
+      wood = 10,
       sett = 40,
-      grass_paver = 40,
-      gravel = 40,
-      unpaved = 40,
-      ground = 40,
-      dirt = 40,
+      grass_paver = 10,
+      gravel = 30,
+      unpaved = 20,
+      ground = 20,
+      dirt = 10,
       pebblestone = 40,
-      tartan = 40,
+      tartan = 30,
 
       cobblestone = 30,
-      clay = 30,
+      clay = 10,
 
       earth = 20,
       stone = 20,
       rocky = 20,
-      sand = 20,
+      sand = 10,
 
       mud = 10
     },
@@ -260,10 +260,10 @@ function setup()
 
     -- http://wiki.openstreetmap.org/wiki/Speed_limits
     maxspeed_table_default = {
-      urban = 50,
-      rural = 90,
-      trunk = 110,
-      motorway = 130
+      urban = 60,
+      rural = 85,
+      trunk = 85,
+      motorway = 85
     },
 
     -- List only exceptions
@@ -301,7 +301,7 @@ function setup()
       ["ro:trunk"] = 100,
       ["ru:living_street"] = 20,
       ["ru:urban"] = 60,
-      ["ru:motorway"] = 110,
+      ["ru:motorway"] = 85,
       ["uk:nsl_single"] = (60*1609)/1000,
       ["uk:nsl_dual"] = (70*1609)/1000,
       ["uk:motorway"] = (70*1609)/1000,
@@ -436,6 +436,10 @@ function process_way(profile, way, result, relations)
     WayHandlers.surface,
     WayHandlers.penalties,
 
+    -- set penalty to try to follow legal access restriction
+    WayHandlers.handle_weight,
+    WayHandlers.handle_length,
+    WayHandlers.handle_hgv_access,
     -- compute class labels
     WayHandlers.classes,
 
