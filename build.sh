@@ -31,15 +31,15 @@ cd ..
 mkdir car
 cp italy-latest.osm.pbf car
 cd car
-sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-extract -p /opt/truck.lua /data/italy-latest.osm.pbf
-sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-partition /data/italy-latest.osrm
-sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-customize /data/italy-latest.osrm
+sudo docker run -t -v "${PWD}:/data" osrm-backend-latest osrm-extract -p /opt/car.lua /data/italy-latest.osm.pbf
+sudo docker run -t -v "${PWD}:/data" osrm-backend-latest osrm-partition /data/italy-latest.osrm
+sudo docker run -t -v "${PWD}:/data" osrm-backend-latest osrm-customize /data/italy-latest.osrm
 rm italy-latest.osm.pbf
 cd ..
 
 echo "start osrm backend"
 sudo docker run -d -t -i -p 5000:5000 -v "${PWD}:/data" osrm-backend-lvx osrm-routed --algorithm mld /data/truck/italy-latest.osrm
-sudo docker run -d -t -i -p 5000:5001 -v "${PWD}:/data" osrm-backend-lvx osrm-routed --algorithm mld /data/car/italy-latest.osrm
+sudo docker run -d -t -i -p 5001:5000 -v "${PWD}:/data" osrm-backend-lvx osrm-routed --algorithm mld /data/car/italy-latest.osrm
 
 cd ../..
 echo "install frontend"
