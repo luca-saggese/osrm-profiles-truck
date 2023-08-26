@@ -15,7 +15,7 @@ Measure = require("lib/measure")
 function setup()
   return {
     properties = {
-      max_speed_for_map_matching      = 90/3.6, -- 180kmph -> m/s
+      max_speed_for_map_matching      = 180/3.6, -- 180kmph -> m/s
       -- For routing based on duration, but weighted for preferring certain roads
       weight_name                     = 'routability',
       -- For shortest duration without penalties for accessibility
@@ -27,14 +27,14 @@ function setup()
       continue_straight_at_waypoint  = true,
       use_turn_restrictions          = true,
       left_hand_driving              = false,
-      traffic_light_penalty          = 60,
+      traffic_light_penalty          = 10,
     },
 
     default_mode              = mode.driving,
     default_speed             = 10,
     oneway_handling           = true,
     side_road_multiplier      = 0.8,
-    turn_penalty              = 25,
+    turn_penalty              = 12,
     speed_reduction           = 0.8,
     turn_bias                 = 1.075,
     cardinal_directions       = false,
@@ -301,7 +301,7 @@ function setup()
       ["ro:trunk"] = 100,
       ["ru:living_street"] = 20,
       ["ru:urban"] = 60,
-      ["ru:motorway"] = 85,
+      ["ru:motorway"] = 110,
       ["uk:nsl_single"] = (60*1609)/1000,
       ["uk:nsl_dual"] = (70*1609)/1000,
       ["uk:motorway"] = (70*1609)/1000,
@@ -437,9 +437,9 @@ function process_way(profile, way, result, relations)
     WayHandlers.penalties,
 
     -- set penalty to try to follow legal access restriction
-    WayHandlers.handle_weight,
-    WayHandlers.handle_length,
-    WayHandlers.handle_hgv_access,
+    --- WayHandlers.handle_weight,
+    --- WayHandlers.handle_length,
+    --- WayHandlers.handle_hgv_access,
     -- compute class labels
     WayHandlers.classes,
 

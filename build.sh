@@ -38,8 +38,8 @@ rm italy-latest.osm.pbf
 cd ..
 
 echo "start osrm backend"
-sudo docker run -d -t -i -p 5000:5000 -v "${PWD}:/data" osrm-backend-lvx osrm-routed --algorithm mld /data/truck/italy-latest.osrm
-sudo docker run -d -t -i -p 5001:5000 -v "${PWD}:/data" osrm-backend-lvx osrm-routed --algorithm mld /data/car/italy-latest.osrm
+sudo docker run -d -t -i -p 5000:5000 -v "${PWD}:/data" osrm-backend-latest osrm-routed --algorithm mld /data/truck/italy-latest.osrm
+sudo docker run -d -t -i -p 5001:5000 -v "${PWD}:/data" osrm-backend-latest osrm-routed --algorithm mld /data/car/italy-latest.osrm
 
 cd ../..
 echo "install frontend"
