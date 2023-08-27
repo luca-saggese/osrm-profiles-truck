@@ -22,7 +22,7 @@ echo "process map"
 mkdir truck
 cp italy-latest.osm.pbf truck
 cd truck
-sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-extract -p /opt/car.lua /data/italy-latest.osm.pbf
+sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-extract -p /opt/truck.lua /data/italy-latest.osm.pbf
 sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-partition /data/italy-latest.osrm
 sudo docker run -t -v "${PWD}:/data" osrm-backend-lvx osrm-customize /data/italy-latest.osrm
 rm italy-latest.osm.pbf
